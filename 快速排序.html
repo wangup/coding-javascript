@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>快速排序</title>
+</head>
+<body>
+<script>
+    function sortArray(nums) {
+        if (nums.length<2)
+            return
+
+        quickSort(nums,0,nums.length-1)
+
+        return nums
+    }
+    
+    function quickSort(nums,left,right) {
+        if (right>=left){
+            return
+        }
+        let index=partition(nums,left,right)
+        quickSort(nums,left,index-1)
+        quickSort(nums,index+1,right)
+    }
+
+    function partition(nums,left,right) {
+        var target= nums[left]
+
+        while (left<right){
+            while (left<right&&nums[right]>=target){
+                right--
+            }
+
+            [nums[left],nums[right]]=[nums[right],nums[left]]
+
+            while (left<right&&nums[left]<target){
+                left++
+            }
+
+            [nums[left],nums[right]]=[nums[right],nums[left]]
+
+        }
+        return left
+
+    }
+    var nums=[3,4,2,9,6]
+    console.log(sortArray(nums))
+</script>
+</body>
+</html>
