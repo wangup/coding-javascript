@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>求根到叶子节点数字之和</title>
+</head>
+<body>
+<script>
+    var root=[1,2,3]
+    /*
+    DFS，先遍历4节点，遍历到9时，就有 4 * 10 + 9，为 49，再遍历到5时，有 49 * 10 + 5，为 495。
+    一个分支（一个递归分支）维护一个 cur 变量，在下探的过程中计算，更新 cur。
+        cur = 10 * cur + root.val;
+    当遍历到叶子节点时，当前分支计算结束，返回 cur。
+
+    遍历到非叶子节点时，基于当前cur，递归计算左右子分支，并把结果相加：
+
+    if (root.left == null && root.right == null) {
+    return cur;
+    }
+    return helper(root.left, cur) + helper(root.right, cur);
+
+    注意这里默认root.left和root.right是存在的，如果不存在呢？或者，递归入口传的 root 就不存在呢？
+
+    因此还需要设置一个递归的出口：当遍历到 null 时，不存在 root.val，做不了计算，直接返回 0。
+*/
+    function TreeNode(val) {
+         this.val = val;
+         this.left = this.right = null;
+     }
+    var sumNumbers=function (root) {
+
+        let sum=dfs(root,0)
+        return sum
+    };
+    function dfs(root,presum) {
+        if (!root)
+            return 0
+        let sum=presum*10+root.val
+        if (!root.left&&!root.right){
+            return sum
+        } else {
+            return dfs(root.left,sum)+dfs(root.right,sum)
+        }
+    }
+    console.log(sumNumbers(root))
+</script>
+</body>
+</html>

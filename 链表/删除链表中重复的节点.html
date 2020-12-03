@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function ListNode(x){
+        this.val = x;
+        this.next = null;
+    }
+    function deleteDuplication(pHead)
+    {
+        // write code here
+        let pre=new ListNode(0)
+
+        pre=pHead
+        let cur=pHead.next
+
+        if (pHead&&pHead.val===cur.val){
+            return cur
+        }
+
+        while (cur){
+            if (cur.val===cur.next.val){
+                pre.next=cur.next
+                cur=cur.next
+            }else {
+                pre=cur
+                cur=cur.next
+            }
+        }
+
+        return pHead
+
+    }
+    console.log(deleteDuplication(1->2->3->3->4->4->5))
+</script>
+</body>
+</html>

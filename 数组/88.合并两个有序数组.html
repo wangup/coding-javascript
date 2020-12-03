@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>合并两个有序数组</title>
+</head>
+<body>
+<script>
+    var nums1 = [1,2,3,0,0,0], m = 3;
+    var nums2 = [2,5,6],n = 3;
+    var merge = function(nums1, m, nums2, n) {
+        let len=m+n-1;
+        let index1=m-1,index2=n-1
+        while(index2>=0){
+            // 先比较nums1就能比较nums1为空
+            if (nums2[index2]<nums1[index1]){
+                nums1[len--]=nums1[index1--];
+            } else {
+                nums1[len--]=nums2[index2--];
+            }
+        }
+        return nums1;
+    };
+    console.log(merge(nums1,m,nums2,n))
+</script>
+</body>
+</html>

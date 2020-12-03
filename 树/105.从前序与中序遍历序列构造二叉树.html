@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>从前序与中序遍历序列构造二叉树</title>
+</head>
+<body>
+<!--优化：每次都在inorder数组中找根节点，用哈希表存inorder每一项-->
+<!--<script>
+    /*引入 map 来记录 inorder 值与下标的映射，从而优化根据前序遍历根节点的值，找到中序遍历中对应的元素的速度*/
+    var buildTree=function (preorder,inorder) {
+        if (preorder.length!==inorder.length)
+            return null;
+        let map=new Map();
+        for (let i=0;i<inorder.length;i++){
+            map.set(inorder[i],i);
+        }
+        return buildSubTree(preorder,inorder,0,preorder.length-1,map)
+    };
+
+    function buildSubTree(preorder,inorder,start,end,map){
+        if (start>end){
+            return null;
+        }
+        let value=preorder.shift();
+        /*let index=inorder.indexOf(value);*/
+        let index=map[value];
+        let root=new TreeNode(value);
+        root.left=buildSubTree(preorder,inorder,start,index-1,map);
+        root.right=buildSubTree(preorder,inorder,index+1,end,map);
+            return root;
+    }
+</script>-->
+
+<script>
+    /*字符串截取存在性能消耗，没必要每次都切割出preorder和inorder
+    * 用两个指针表示即可*/
+    var buildTree=function (preorder,inorder) {
+        if (preorder.length!==inorder.length)
+            return null;
+        let len=preorder.length-1;
+        let map=new Map();
+        for(let i=0;i<inorder.length;i++){
+            map.set(inorder[i],i);
+        }
+        return buildSubTree(preorder,inorder,0,len,0,len,map);
+    };
+    function buildSubTree(preorder,inorder,p_start,p_end,i_start,i_end,map){
+        if (p_start>p_end){
+            return null;
+        }
+        let value=preorder[p_start];
+        let index=map.get(value);
+        let left_len=index-i_start;
+        let root=new TreeNode(value);
+        root.left=buildSubTree(preorder,inorder,p_start+1,p_start+left_len,i_start,index-1,map);
+        root.right=buildSubTree(preorder,inorder,p_start+left_len+1,p_end,index+1,i_end,map);
+        return root;
+    }
+</script>
+</body>
+</html>

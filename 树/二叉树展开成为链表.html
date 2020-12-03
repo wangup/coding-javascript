@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二叉树展开成为链表</title>
+</head>
+<body>
+<!--/*给定一个二叉树，原地将它展开为一个单链表*/-->
+<script>
+    /*1.先讲根节点的左子树保存，然后遍历左子树的右孩子，
+    * 2，将最后的右孩子与根节点右孩子连接
+    * 3.将根节点的右孩子换成根节点的左孩子
+    *
+    * 4.（重要）遍历好之后，将根节点往右移，再次循环，直到为空*/
+    var flatten =function (root) {
+        while (root){
+
+            if (root.left==null){
+                root=root.right
+            } else {
+                let next=root.left
+
+                while (next.right)next=next.right
+                next.right=root.right
+                root.right=root.left
+                root.left=null
+            }
+        }
+    }
+</script>
+</body>
+</html>

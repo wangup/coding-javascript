@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二叉树的层序遍历</title>
+</head>
+<body>
+<script>
+    /*BFS遍历使用队列数据结构*/
+   /* var levelOrder=function (root) {
+        if(!root)
+            return []
+        let queue=[],res=[]
+        queue.push(root)
+        while (queue.length>0) {
+            let len=queue.length,level=[]
+            for (let i=0;i<len;i++){
+                const node=queue.shift()
+                level.push(node.val)
+                if (node.left){
+                    queue.push(node.left)
+                }
+                if (node.right){
+                    queue.push(node.right)
+                }
+            }
+            res.push(level.slice())
+
+        }
+        return res
+    }*/
+
+   // DFS遍历
+    var levelOrder=function (root) {
+        if (!root)
+            return []
+        let depth=0,result=[]
+        helper(root,depth,result)
+        return result
+    }
+
+    function helper(root,depth,result) {
+        if (!root)
+            return []
+        if (!result[depth]){
+            result[depth]=[]/*必须是[]*/
+        }
+        result[depth].push(root.val)
+        helper(root.left,depth+1,result)
+        helper(root.right,depth+1,result)
+    }
+</script>
+</body>
+</html>

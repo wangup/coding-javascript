@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>和为某一路径</title>
+</head>
+<body>
+<script>
+    /*输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径。
+    从树的根节点开始往下一直到叶节点所经过的节点形成一条路径
+
+    不以根节点开始，不以叶子节点结束
+    */
+
+    var pathSum = function(root, sum) {
+        const res=[]
+        if (root){
+            pathsumCore(root,sum,0,[],res)
+        }
+        return res
+    }
+
+    var pathsumCore =function (root,sum,cursum,stack,result) {
+        if(!root)
+            return
+        //stack存放的是每条路径的数组
+        stack.push(root.val)
+        cursum+=root.val
+        //对于每一个节点都要判断，如果sum===cursum时候满足要求(这里满足不一定以叶子节点结束)，就存入结果数组中
+        if (sum===cursum){
+            //存放的是stack的拷贝，否则stack会随着元素的变化而变化
+            result.push([...stack])
+        }
+        //设立一个新的路径stack1和cursum=0，这样就不一定是根节点开始
+        if (root.left){
+            let stack1=[]
+            pathsumCore(root.left,sum,0,stack1,result)
+            pathsumCore(root.left,sum,cursum,stack,result)
+        }
+        if (root.right){
+            let stack2=[]
+            pathsumCore(root.right,sum,0,stack2,result)
+            pathsumCore(root.right,sum,cursum,stack,result)
+        }
+
+        stack.pop()//Note :一定要弹出当前元素，这是回溯算法关键的一点
+    }
+
+</script>
+</body>
+</html>

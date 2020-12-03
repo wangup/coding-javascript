@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中序遍历</title>
+</head>
+<body>
+<script>
+
+    var inorderTraversal=function(root){
+        let result = []
+        let stack=[]
+        while(root||stack.length>0){
+            while(root){
+                stack.push(root)
+                root=root.left
+            }
+            root=stack.pop()
+            result.push(root.val)
+            root=root.right
+        }
+        return result
+    }
+
+    /*颜色标记法*/
+    var inorderTraversal=function (root) {
+        let res=[],stack=[]
+        if (root){
+            stack.push({color:'white',node:root})
+        }
+        while (stack.length>0){
+            const {color,node}=stack.pop()
+
+            if (color==='gray'){
+                res.push(node.val)
+            } else if(color==='white'){
+                if (node.right){
+                    stack.push({color:'white',node:node.right})
+                }
+                stack.push({color:'gray',node})
+                if (node.left){
+                    stack.push({color:'white',node:node.left})
+                }
+            }
+        }
+        return res
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复原IP地址</title>
+</head>
+<body>
+<script>
+
+    var s = /*"25525511135"*/ "010010"
+    var restoreIpAddresses=function (s){
+        let path=[],res=[],len=s.length
+        dfs(s,len,0,path,res)
+        return res
+    };
+
+    function dfs(s,len,begin,path,res){
+        let n=path.length
+        // 片段满4段，且到了字符串最后位置
+        if (n===4&&begin===s.length){
+            res.push(path.join('.'))
+            return
+        }
+        // 满4段，但是begin没到最后位置，不用往下选
+        if (path.length===4&&begin<s.length){
+            return
+        }
+        // 满1段，如果选此时begin的话，会超过3段，就不用往下选了
+        if (n===1&&len-begin>9){
+            return
+        }
+
+        if (n===2&&len-begin>6){
+            return
+        }
+        if (n===3&&len-begin>3){
+            return
+        }
+
+        for (let i=1;i<=3;i++){
+            // 加上要切割的长度就越界了，不能切割这个
+            if (begin+i>len){
+                return
+            }
+
+            // 作出选择，将片段加入cur
+            let cur=s.substring(begin,begin+i)
+            if (Number(cur)>255)
+                return;
+            if (cur[0]==='0'&&cur.length>1){
+                return
+            }
+            path.push(cur)
+            // 基于当前选择，继续选择，更新指针
+            dfs(s,len,begin+i,path,res)
+            // 上面的递归分支结束，撤销最后的选择，进入下一轮迭代，考察下一个切割长度
+            path.pop()
+
+        }
+    }
+    console.log(restoreIpAddresses(s))
+</script>
+</body>
+</html>

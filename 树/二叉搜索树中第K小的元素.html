@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二叉搜索树中的第k小的元素</title>
+</head>
+<body>
+<script>
+    var kthSmallest=function(root,k){
+        if (root){
+            let stack=[];
+            inorder(root,stack);
+            for (let i=0;i<stack.length;i++){
+                if (k-1===i){
+                    return stack[i]
+                }
+            }
+        }
+    };
+    function inorder(root,stack) {
+        if (!root)
+            return null;
+        if (root){
+            inorder(root.left,stack);
+            stack.push(root.val);
+            inorder(root.right,stack);
+            return stack;
+        }
+    }
+</script>
+</body>
+</html>

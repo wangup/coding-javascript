@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>连续子数组的最大和</title>
+</head>
+<body>
+<script>
+    var array=[6,-3,-2,7,-15,1,2,2]
+    function FindGreatestSumOfSubArray(array)
+    {
+        // write code here
+
+        if(array.length>=1){
+            let dp=new Array(array.length).fill(0)
+            let max_sum=array[0]
+            for(let i=1;i<array.length;i++){
+                dp[i]=Math.max(array[i],dp[i-1]+array[i])
+                max_sum=Math.max(max_sum,dp[i])
+            }
+            return max_sum
+        }
+
+    }
+    console.log(FindGreatestSumOfSubArray(array))
+</script>
+</body>
+</html>

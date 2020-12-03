@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>整数中1出现的次数</title>
+</head>
+<body>
+<script>
+    var n=13
+    function NumberOf1Between1AndN_Solution(n)
+    {
+        // write code here
+         /*var count=0
+        for(let i=1;i<=n;i++){
+            let flag=i,flag1
+            while(flag){
+                flag/=10
+                flag1=flag%10
+                if (flag===1||flag1===1) {
+                    count++
+                }
+            }
+        }
+            return count*/
+
+         var count=0
+        for(let i=1;i<=n;i++){
+            let flag=1
+            while (flag){
+                if (flag&i){
+                    count++
+                }
+                flag=flag<<1
+            }
+        }
+
+        return count
+    }
+    console.log(NumberOf1Between1AndN_Solution(n))
+</script>
+</body>
+</html>

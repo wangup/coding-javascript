@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二分查找</title>
+</head>
+<body>
+<script>
+    /*寻找左侧边界的二分查找*/
+    var num=[1,2,3,3,3,6],target=3
+    var left_bound=function (num,target) {
+        if (num.length===0)
+            return
+        let left=0,right=num.length-1;
+        while (left<=right){
+            const mid=left+(right-left)>>1;
+            if (num[mid]===target) {
+                right=mid-1;
+            }else if (num[mid]<target){
+                left=mid+1
+            } else if (num[mid]>target) {
+                right=mid-1;
+            }
+        }
+        /!*检查出界情况*!/
+        if (left>=num.length||num[left]!==target)
+            return
+        return left
+    };
+
+    var right_bound=function(num,target) {
+        if (num.length === 0)
+            return;
+        let left = 0, right = num.length;
+
+        while (left < right) {
+            let mid = left + (right - left) >> 1;
+            if (num[mid] === target) {
+                left = mid + 1; // 注意
+            } else if (num[mid] < target) {
+                left = mid + 1;
+            } else if (num[mid] > target) {
+                right = mid;
+            }
+        }
+        return left - 1; // 注意
+    };
+    console.log(right_bound(num,target));
+    /*console.log(right_bound(num,target));*/
+</script>
+</body>
+</html>

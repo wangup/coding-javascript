@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>翻转二叉树</title>
+</head>
+<body>
+<script>
+    var invertTree=function (root) {
+      if (!root)
+          return;
+        let temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        invertTree(root.left);
+        invertTree(root.right);
+
+        return root;
+    };
+</script>
+</body>
+</html>

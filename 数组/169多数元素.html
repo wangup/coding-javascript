@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多数元素</title>
+</head>
+<body>
+<script>
+    var nums=[3,2,3];
+    function majorityElement(nums){
+        if (nums.length===0)
+            return 0;
+        let cur=0,count=0;
+        for (let i=0;i<nums.length;i++){
+            if (count===0){
+                cur=nums[i];
+            }
+            if (cur!==nums[i]){
+                count--;
+            } else {
+                count++;
+            }
+
+        }
+        return cur;
+    }
+    console.log(majorityElement(nums));
+</script>
+</body>
+</html>

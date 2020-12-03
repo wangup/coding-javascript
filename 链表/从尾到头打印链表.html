@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>从尾到头打印链表</title>
+</head>
+<body>
+<script>
+    function ListNode(val){
+        this.val=val;
+        this.next=null;
+    }
+    var reversePrint = function(head) {
+        /*递归*/
+        let i=0,res=[]
+        helper(head,i,res)
+        return res
+    };
+
+    function helper(head,i,res){
+        if (!head){
+            res=new Array(i)
+            return
+        }
+        i++
+        helper(head.next,i)
+        res[res.length- i--]=head.val
+        return res
+    }
+
+    function headconvertLink(head){
+        let link=new ListNode(head.shift())
+        while (head){
+            link.next=new ListNode(head.shift())
+            link=link.next
+        }
+        return link
+    }
+
+    function linkconverthead(link) {
+        let head=[]
+        while (link){
+            head.push(link.val)
+            link=link.next
+        }
+        return head
+    }
+    var head=[1,3,2]
+    const link=headconvertLink(head)
+    const res=reversePrint(link)
+    const arr=linkconverthead(res)
+    console.log(arr)
+</script>
+</body>
+</html>

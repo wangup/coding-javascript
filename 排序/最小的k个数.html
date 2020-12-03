@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>最小的k个数</title>
+</head>
+<body>
+<script>
+    /*输入n个整数，找出其中最小的K个数。
+    例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4。*/
+    var input=[4,5,1,6,2,7,3,8],k=4
+    function GetLeastNumbers_Solution(input, k)
+    {
+        // write code here
+
+        if(input.length<1||k>input.length)
+            return
+        let start=0,end=input.length-1
+        let index=quickSortCore(input,start,end)
+        while (index!==k-1){
+            if (index<k-1){
+                index=quickSortCore(input,index+1,end)
+            } else{
+                index=quickSortCore(input,start,index-1)
+            }
+        }
+
+        return input.slice(0,k)
+    }
+
+    function quickSortCore(nums,left,right){
+        if(left>=right){
+            return
+        }
+
+        let target=nums[left]
+        while(left<right){
+            while(left<right&&nums[left]>=target){
+                left--
+            }
+            [nums[left],nums[right]]=[nums[right],nums[left]]
+            while(left<right&&nums[right]<target){
+                right++
+            }
+            [nums[left],nums[right]]=[nums[right],nums[left]]
+        }
+        nums[left]=target
+
+        return left
+    }
+
+    console.log(GetLeastNumbers_Solution(input))
+</script>
+</body>
+</html>

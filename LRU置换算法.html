@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LRU算法</title>
+</head>
+<body>
+<!--设计一个LRU（最近最少使用）缓存机制。它应该支持以下操作：获取数据get和写入数据put
+获取数据get(key)--如果key存在于缓存中，则获取key的值（总是为正值），否则返回为-1.
+写入数据put(key，value)--如果key不存在，则写入其数据值。当缓存容量达到上限时，它应该写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。
+
+-->
+
+<script>
+    function DLinkNode(){
+        this.key;
+        this.value;
+        this.pre;
+        this.next;
+    }
+
+    let head,tail;
+
+    //添加node的时候往头部添加,类似于双指针，先处理好node怎么插入到head，然后再head与连接node
+    function addNode(node){
+        node.pre=head;
+        node.next=head.next;
+
+        head.next.pre=node;
+        head.next=node;
+
+    }
+
+    function removeNode(node){
+        let node_pre=node.pre;
+        let node_next=node.next;
+
+        node_pre.next=node_next;
+        node_next.pre=node_pre;
+    }
+
+    function moveToHead(node){
+        removeNode(node);
+        addNode(node);
+    }
+
+    //队尾元素删除
+    function tailToPop(){
+        let pre=tail.pre;
+
+        removeNode(pre);
+        return pre;
+    }
+
+    function URLCache(capacity){
+        this.capacity=capacity;
+        this.count=0;
+        this.cache=new Map();
+        head=new DLinkNode();
+        head.pre=null;
+        tail=new DLinkNode();
+        tail.next=null;
+
+        head.next=tail;
+        tail.pre=head;
+    }
+
+    URLCache.prototype.put=function(key,value){
+        if (this.cache.has(key)){
+            let node=this.cache.get(key);
+            node.value=value;
+            moveToHead(node);/*将node移到头部*/
+        } else{
+            let node=new DLinkNode();
+            node.key=key;
+            node.value=value;
+            this.cache.set(key,value);
+
+            addNode(node);
+            this.count++;
+            /*大于容量，就删除最近最少使用的node*/
+            if(this.count>this.capacity){
+                let node=tailToPop();/*删除队尾元素*/
+                this.cache.delete(node.key);
+                this.count--;
+            }
+        }
+    };
+
+    URLCache.prototype.get=function(key){
+        if (!this.cache.has(key)){
+            return -1;
+        }
+
+        let node=this.cache.get(key);
+        moveToHead(node);
+
+        return node.value;
+    };
+
+    let cache = new URLCache(2);/*缓存容量*/
+    cache.put(1,1);
+    cache.put(2,2);
+    console.log(cache.cache);
+    console.log(cache.get(1));
+    cache.put(3.3);
+    console.log(cache.get(2));
+    cache.put(4,4);
+    console.log(cache.get(1));
+    console.log(cache.get(3));
+    console.log(cache.get(4));
+</script>
+</body>
+</html>

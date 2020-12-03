@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>从中序与后序遍历序列构造二叉树</title>
+</head>
+<body>
+<script>
+    function TreeNode(val) {
+         this.val = val;
+         this.left = this.right = null;
+    }
+    var buildTree=function(inorder, postorder){
+        if (inorder.length!==postorder.length)
+            return null;
+        let map=new Map();
+        for (let i=0;i<inorder.length;i++){
+            map.set(inorder[i],i);
+        }
+
+        return buildSubTree(inorder,postorder,0,inorder.length-1,0,postorder.length-1,map);
+    };
+    function buildSubTree(inorder, postorder,i_start,i_end,p_start,p_end,map){
+        if (i_start>i_end)
+            return null;
+        let value=postorder[postorder.length-1];
+        let mid=map.get(value);
+        let left_len=mid-i_start;
+        let root=new TreeNode(value);
+        root.left=buildSubTree(inorder,postorder,i_start,mid-1,p_start,p_start+left_len,map);
+        root.right=buildSubTree(inorder,postorder,mid+1,i_end,p_start+left_len+1,p_end,map);
+        return root;
+    }
+
+    var inorder=[9,3,15,20,7],postorder=[9,15,7,20,3];
+    console.log(buildTree(inorder,postorder));
+</script>
+</body>
+</html>

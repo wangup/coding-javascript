@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>归并排序</title>
+</head>
+<body>
+<script>
+    /*解题思路：
+    该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。
+    （分治法将问题分成一些小的问题然后递归求解，而治的阶段则将分的阶段得到的各答案"修补"在一起，即分而治之)。
+    * 1.先将数组分为左右数组，不断递归分成更小的数组，
+    * 然后将子序列里有序，然后将子序列间有序*/
+    var num=[5,1,1,2,0,0]
+    var sortArray=function(num){
+        if (num.length<=1)
+            return num
+        let temp=[]
+        divide(num,0,num.length-1,temp)
+        return num
+    };
+
+    function divide(num,left,right,temp){
+        if (left<right){
+            let mid=(left+right)>>1
+            divide(num,left,mid,temp)
+            divide(num,mid+1,right,temp)
+            backdivide(num,left,right,temp)
+            return num
+        }
+    }
+
+    function backdivide(num,left,right,temp){
+        let mid=(left+right)>>1
+        let leftIndex=left
+        let rightIndex=mid+1
+        let tempIndex=0
+        while(leftIndex<=mid&&rightIndex<=right){
+            if (num[leftIndex]<num[rightIndex]){
+                temp[tempIndex++]=num[leftIndex++]
+            }else{
+                temp[tempIndex++]=num[rightIndex++]
+            }
+        }
+        while (leftIndex<=mid){
+            temp[tempIndex++]=num[leftIndex++]
+        }
+        while (rightIndex<=right){
+            temp[tempIndex++]=num[rightIndex++]
+        }
+        tempIndex=0
+        for (let i=left;i<=right;i++){
+            num[i]=temp[tempIndex++]
+        }
+        return num
+    }
+
+    console.log(sortArray(num))
+</script>
+</body>
+</html>

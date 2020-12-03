@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>求根到叶子节点数字之和</title>
+</head>
+<body>
+
+<script>
+    var sumNumbers=function (root){
+        let process=[[root,0]],sum=0,root_sum=0
+        if (!root)
+            return 0
+        while (process.length){
+            var n=process.pop()
+            sum=n[0].val+n[1]
+            n[0].left&&process.push([n[0].left,sum*10])
+            n[0].right&&process.push([n[0].right,sum*10])
+            // 将每个根到叶子节点的数字相加
+            if ( !n[0].left&&!n[0].right){
+                root_sum+=sum
+            }
+        }
+        return root_sum
+    };
+
+</script>
+
+</body>
+</html>

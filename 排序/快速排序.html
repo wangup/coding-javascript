@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>快速排序</title>
+</head>
+<body>
+<script>
+
+    /*var num=[-2,3,-5]*/
+    var num=[5,1,1,2,0,0]
+/*  第一种方法：
+var sortArray=function(nums){
+     QuickSort(nums,0,nums.length-1)
+    return nums
+};
+
+function QuickSort(num,start,end){
+        if (num.length>1){
+            let index=partition(num,start,end)
+            if (start<index-1)
+            QuickSort(num,start,index-1)
+            if (index<end)
+            QuickSort(num,index,end)
+        }
+}
+    /!*解题思路：
+        * 1.随机（一般是中间值）划分两个数组
+        * 2.在每个数组生成左右指针，当左指针的值大于target，右指针的值小于中值，则把左右指针的值交换，
+        * 否则一直循环直到遍历数组
+        * 3.将已经拆分好左右两个数组（以中间值为标准，左数组的值比它小，右数组的值比它大）
+        * 以中间值为标准分别在左右数组继续递归拆分数组，直至数组已完全排序*!/
+function partition(num,start,end) {
+    let target=num[(start+end)>>1]
+    while (start<=end){
+        while(num[start]<target){
+            start++
+        }
+        while (num[end]>target){
+            end--
+        }
+        if (start<=end){
+            [num[start],num[end]]=[num[end],num[start]]
+            start++
+            end--
+        }
+    }
+    return start
+
+}*/
+
+
+/*var sortArray=function(num){
+    return quickSort(num,0,num.length-1)
+}
+
+function quickSort(num,start,end){
+    if (end-start<1)
+        return
+    let target=num[start]
+    let left=start,right=end
+    while (left<right){
+        while (left<right&&num[right]>=target)right--
+        num[left]=num[right]
+        while (left<right&&num[left]<target)left++
+        num[right]=num[left]
+    }
+    num[left]=target
+    quickSort(num,start,left-1)
+    quickSort(num,left+1,end)
+    return num
+}*/
+
+var sortArray=function(num){
+    if (num.length<=1){
+        return num
+    }
+    let len=num.length-1
+    quickSort(num,0,len)
+    return num
+}
+
+function quickSort(num,start,end){
+    if (end-start<0)
+        return
+    let index=partition(num,start,end)
+    quickSort(num,start,index-1)
+    quickSort(num,index+1,end)
+    return num
+}
+
+function partition(num,start,end){
+    let target = num[end]
+    let leftIndex=start
+    for (let i=start;i<end;i++){
+        if (num[i]<target){
+            [num[i],num[leftIndex]]=[num[leftIndex],num[i]]
+            leftIndex++
+        }
+    }
+   /* num[end]=num[leftIndex]
+    num[leftIndex]=target*/
+   [num[leftIndex],num[end]]=[num[end],num[leftIndex]]
+    return leftIndex
+
+
+    /*let target=num[start]
+    while (start<end){
+        while (start<end&&num[end]>=target)end--
+        num[start]=num[end]
+        while ((start<end&&num[start]<target))start++
+        num[end]=num[start]
+    }
+    num[start]=target
+    return start*/
+}
+console.log(sortArray(num))
+</script>
+</body>
+</html>

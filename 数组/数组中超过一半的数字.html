@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组中出现次数超过一半的数字</title>
+</head>
+<body>
+<script>
+    /*数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+    例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。
+    由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。
+    如果不存在则输出0。*/
+
+    var number=[1,2,3,2,2,2,5,4,2]
+
+    function MoreThanHalfNum_Solution(numbers)
+    {
+        // write code here
+
+        /*暴力法*/
+        let len=numbers.length
+
+        let mid=Math.floor(len/2)
+        let hashmap={}
+        for(let i=0;i<len;i++){
+            if (!hashmap[numbers[i]]){
+                hashmap[numbers[i]]=1
+            } else{
+                hashmap[numbers[i]]++
+            }
+
+            if (hashmap[numbers[i]]>mid){
+                return numbers[i]
+            }
+        }
+        return 0
+
+    }
+
+
+    console.log(MoreThanHalfNum_Solution(number))
+</script>
+</body>
+</html>
